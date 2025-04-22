@@ -25,7 +25,7 @@ app.get('/pedidos-cadastrados', (req, res) => {
 app.get('/pedidos-cadastrados/:id', (req, res) => {
     const pedidoID = req.params.id;
 
-    const pedido = pedidosCadastrados.find(p => p.id === pedidoID); 
+    const pedido = pedidosCadastrados.find(p => p.id == pedidoID); 
     
     if (!pedido) { // Verifica se o pedido procurado não existe - erro por parte do cliente E o recurso não existe (404)
         return res.status(404).send({ message: 'Pedido não encontrado!' });
@@ -35,14 +35,13 @@ app.get('/pedidos-cadastrados/:id', (req, res) => {
 
 });
 
-app.put('editar-pedido/:id', (req, res) => { 
+app.put('/editar-pedido/:id', (req, res) => { 
     const pedidoID = req.params.id;
-    const pedidoIndex = pedidosCadastrados.findIndex(p => p.id === pedidoID); // Encontra o índice do pedido a ser editado
+    const pedidoIndex = pedidosCadastrados.findIndex(p => p.id == pedidoID); 
 
     const { produto, quantidade } = req.body; // Estrutura da edição
 
-
-    if (pedidoIndex === -1) { // Verifica se o pedido procurado não existe - erro por parte do cliente E o recurso não existe (404)
+    if (pedidoIndex == -1) { // Verifica se o pedido procurado não existe - erro por parte do cliente E o recurso não existe (404)
         return res.status(404).send({ message: 'Pedido não encontrado!' });
     }
 
@@ -55,11 +54,11 @@ app.put('editar-pedido/:id', (req, res) => {
 
 });
 
-app.delete('excluir-pedido/:id', (req, res) => { 
+app.delete('/excluir-pedido/:id', (req, res) => { 
     const pedidoID = req.params.id;
-    const pedidoIndex = pedidosCadastrados.findIndex(p => p.id === pedidoID); // Encontra o índice do pedido a ser editado
+    const pedidoIndex = pedidosCadastrados.findIndex(p => p.id == pedidoID); // Encontra o índice do pedido a ser editado
 
-    if (pedidoIndex === -1) { // Verifica se o pedido procurado não existe - erro por parte do cliente E o recurso não existe (404)
+    if (pedidoIndex == -1) { // Verifica se o pedido procurado não existe - erro por parte do cliente E o recurso não existe (404)
         return res.status(404).send({ message: 'Pedido não encontrado!' });
     }
 
