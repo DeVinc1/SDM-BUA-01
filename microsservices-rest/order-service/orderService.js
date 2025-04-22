@@ -37,9 +37,10 @@ app.get('/pedidos-cadastrados/:id', (req, res) => {
 
 app.put('editar-pedido/:id', (req, res) => { 
     const pedidoID = req.params.id;
+    const pedidoIndex = pedidosCadastrados.findIndex(p => p.id === pedidoID); // Encontra o índice do pedido a ser editado
+
     const { produto, quantidade } = req.body; // Estrutura da edição
 
-    const pedidoIndex = pedidosCadastrados.findIndex(p => p.id === pedidoID); // Encontra o índice do pedido a ser editado
 
     if (pedidoIndex === -1) { // Verifica se o pedido procurado não existe - erro por parte do cliente E o recurso não existe (404)
         return res.status(404).send({ message: 'Pedido não encontrado!' });
@@ -50,7 +51,20 @@ app.put('editar-pedido/:id', (req, res) => {
     }
 
     pedidosCadastrados[pedidoIndex] = {id: pedidoID, produto, quantidade};
-    res.status(200).send({ message: 'Pedido editado com sucesso!', pedido }); //A requisição foi bem sucedida (200)
+    res.status(200).send({ message: 'Pedido editado com sucesso!'}); //A requisição foi bem sucedida (200)
+
+});
+
+app.delete('excluir-pedido/:id', (req, res) => { 
+    const pedidoID = req.params.id;
+    const pedidoIndex = pedidosCadastrados.findIndex(p => p.id === pedidoID); // Encontra o índice do pedido a ser editado
+
+    if (pedidoIndex === -1) { // Verifica se o pedido procurado não existe - erro por parte do cliente E o recurso não existe (404)
+        return res.status(404).send({ message: 'Pedido não encontrado!' });
+    }
+
+    pedidosCadastrados.splice(pedidoIndex, 1); 
+    res.status(200).send({ message: 'Pedido excluído com sucesso!' }); //A requisição foi bem sucedida (200)
 
 });
 
